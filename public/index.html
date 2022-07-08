@@ -14,45 +14,55 @@
     <title>WebSite Indigitall</title>
   </head>
   <body>
-    <div id="root" device></div> 
-      <script>
-      function onNewUserRegistered(device){
-        //User ID
-        indigitall.logIn(device.deviceId, (device)=>{
-        //DO SOMETHING
-        }, (error)=>{
-        //LOG ERROR
-        });
-      }
-    
-      function onIndigitallInitialized(permissions,device){
-        window.alert("Indigitall intengrated \nDeviceId: " + device.deviceId);
-      }
-    
-      function onLocationUpdated(location){}
-    
-      function onError(error){}
-    
-      function requestPushPermission(permission){}
-    
-      function requestLocationPermission(permission){}
-    
-      // Remember to replace with your appKey
-      function onIndigitallLoaded(){
-        indigitall.init({
-          appKey:'94cb9c3e-0749-450f-8445-49bf2b269d8a',
-          workerPath:'/worker.min.js',
-          requestLocation: true,
-          onInitialized: onIndigitallInitialized,
-          requestPushPermission: requestPushPermission,
-          onNewUserRegistered: onNewUserRegistered,
-          requestLocationPermission: requestLocationPermission,
-          onLocationUpdated: onLocationUpdated,
-          onError: onError            
-        });
-      }
+    <div id="root"></div> 
     </script>
-    
-    <script src="sdk.min.js" onload="onIndigitallLoaded()" ></script>
+        <script>
+
+          document.addEventListener('loginIndi', function({detail}) {
+            //User ID
+              indigitall.logIn("d49860d5-861c-4cd0-8611-7318b725d18b", (device)=>{
+                window.alert("Congrats " + detail.email + " you'r login!");
+              }, (error)=>{
+                  window.alert("Login error");
+              });
+          });
+
+          document.addEventListener('logoutIndi', function() {
+          });
+
+
+          function onNewUserRegistered(device){
+            console.log(device);
+          }
+        
+          function onIndigitallInitialized(permissions,device){
+            console.log(device);
+            window.alert("Indigitall intengrated \nDeviceId: " + device.deviceId);
+          }
+        
+          function onLocationUpdated(location){}
+        
+          function onError(error){}
+        
+          function requestPushPermission(permission){}
+        
+          function requestLocationPermission(permission){}
+        
+          // Remember to replace with your appKey
+          function onIndigitallLoaded(){
+            indigitall.init({
+              appKey:'94cb9c3e-0749-450f-8445-49bf2b269d8a',
+              workerPath:'/worker.min.js',
+              requestLocation: true,
+              onInitialized: onIndigitallInitialized,
+              requestPushPermission: requestPushPermission,
+              onNewUserRegistered: onNewUserRegistered,
+              requestLocationPermission: requestLocationPermission,
+              onLocationUpdated: onLocationUpdated,
+              onError: onError            
+            });
+          }
+        </script>
+        <script src="sdk.min.js" onload="onIndigitallLoaded()" ></script>
   </body>
 </html>

@@ -10,13 +10,12 @@ import ProtectedArea from "./components/ProtectedArea";
 import "./App.css";
 
 export default class App extends React.Component {
-
 	render() {
 		return (
 		<div className="component-app">
 			<BrowserRouter>
 					<Routes style={{width:'100%', height:'100%'}}>
-						<Route path="/" element={<Home/>} />
+						<Route path="/" element={<Home />} />
 						<Route path="/Home" element={<Home/>} />
 						<Route path="/Login" element={<Login/>}/>
 						<Route path="/Signupstep1" element={<Signup1/>} />

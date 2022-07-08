@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate  } from 'react-router-dom';
- 
+
 export default function LoginForm() {
   
   const [values, setValues] = React.useState({
@@ -8,14 +8,18 @@ export default function LoginForm() {
     password: "",
   });
 
-
   const navigate = useNavigate();
+
   
+
+
   function handleSubmit(evt) {
     evt.preventDefault();
+    const loginEvent = new CustomEvent('loginIndi',  { detail: { email:values.email,  pass:values.password} });
+    document.dispatchEvent(loginEvent);
     navigate("/ProtectedArea");
   }
-
+  
   function handleChange(evt) {
     const { target } = evt;
     const { name, value } = target;
@@ -36,7 +40,7 @@ export default function LoginForm() {
             <input name='password' id="password" placeholder='password' type="password" value={values.password} onChange={handleChange} style={{display: 'flex', textAlign:'center', height:'30px', width:'200px'}}></input>
         </div>
         <div>
-        <button type="submit" style={{display: 'flex', height:'30px' , width:'208px', justifyContent:'center', margin: '30px 0 0 0', alignItems:'center'}}>Submit</button>
+        <button name="submit" type="submit" style={{display: 'flex', height:'30px' , width:'208px', justifyContent:'center', margin: '30px 0 0 0', alignItems:'center'}}>Submit</button>
         </div>
     </form>
   );
