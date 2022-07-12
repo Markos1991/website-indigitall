@@ -12,6 +12,8 @@ export default function SignupStp3() {
   
   function handleSubmit(evt) {
     evt.preventDefault();
+    const ste3Event = new CustomEvent('step3Indi',  { detail: {password:values.password,  password2:values.password2} });
+    document.dispatchEvent(ste3Event);
     navigate("/ProtectedArea");
   }
 

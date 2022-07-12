@@ -15,29 +15,107 @@
   </head>
   <body>
     <div id="root"></div> 
-    </script>
         <script>
+          const idDevice='';
+          const codeTopics=[];
 
-          document.addEventListener('loginIndi', function({detail}) {
+          document.addEventListener('submitLogin', function({detail}) {
             //User ID
-              indigitall.logIn("d49860d5-861c-4cd0-8611-7318b725d18b", (device)=>{
+              indigitall.logIn(localStorage.getItem('idDevice'), (device)=>{
                 window.alert("Congrats " + detail.email + " you'r login!");
               }, (error)=>{
-                  window.alert("Login error");
+                  window.alert("Login error " , error);
               });
           });
 
           document.addEventListener('logoutIndi', function() {
+            indigitall.logOut((device)=>{
+                window.alert("You'r logout!");
+              }, (error)=>{
+                window.alert("Logout error: ", error);
+              });
           });
 
+          document.addEventListener('signupIndi', function({detail}) {
+            $(() => {
+              indigitall.topicsList((topics) => {
+                console.log(topics);
+                topics.forEach((topic) => {
+                  codeTopics.push(topic.code);
+                });
+                console.log(codeTopics);
+                indigitall.topicsSubscribe(codeTopics);
+                indigitall.topicsList((topics) => {
+                  console.log(topics);
+                });
+              });
+            });
+          });
 
+          document.addEventListener('step1Indi', function({detail}) {
+            $(() => {
+              indigitall.topicsList((topics) => {
+                indigitall.topicsUnsubscribe([codeTopics[2]]);
+              });
+            });
+            indigitall.sendCustomEvent({
+              eventType: "step1",
+              customData: {detail}, 
+              async: false,
+            }, (response) => {
+              console.log(response);
+            },(error)=>{
+              window.alert("Step1 error: ", error);
+            });
+            indigitall.topicsList((topics) => {
+                  console.log(topics);
+            });
+          });
+
+          document.addEventListener('step2Indi', function({detail}) {
+            indigitall.topicsList((topics) => {
+              indigitall.topicsUnsubscribe([codeTopics[1]]);
+            });
+            indigitall.sendCustomEvent({
+              eventType: "step2",
+              customData: {data:detail}, 
+              async: false, 
+            }, (response) => {
+              console.log(response);    
+            },(error)=>{
+              window.alert("Step2 error: ", error);
+            });
+            indigitall.topicsList((topics) => {
+                  console.log(topics);
+            });
+          });
+
+          document.addEventListener('step3Indi', function({detail}) {
+            indigitall.topicsList((topics) => {
+              indigitall.topicsUnsubscribe([codeTopics[0]]);
+            });
+            indigitall.sendCustomEvent({
+              eventType: "newUser",
+              customData: {data:detail}, 
+              async: false, 
+            }, (response) => {
+              console.log(response);
+              indigitall.topicsList((topics) => {
+                  console.log(topics);
+              });    
+            },(error)=>{
+              window.alert("Step3 error: ", error);
+            });
+          });
+          
           function onNewUserRegistered(device){
             console.log(device);
           }
         
           function onIndigitallInitialized(permissions,device){
-            console.log(device);
-            window.alert("Indigitall intengrated \nDeviceId: " + device.deviceId);
+            //console.log(device);
+            localStorage.setItem('idDevice', device.deviceId);
+            window.alert("Indigitall intengrated \nDeviceId: " + localStorage.getItem('idDevice'));
           }
         
           function onLocationUpdated(location){}
@@ -63,6 +141,7 @@
             });
           }
         </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <script src="sdk.min.js" onload="onIndigitallLoaded()" ></script>
   </body>
 </html>

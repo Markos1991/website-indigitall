@@ -12,6 +12,8 @@ export default function SignupStp2() {
   
   function handleSubmit(evt) {
     evt.preventDefault();
+    const ste2Event = new CustomEvent('step2Indi',  { detail: {email:values.email,  email2:values.email2} });
+    document.dispatchEvent(ste2Event);
     navigate("/Signupstep3");
   }
 

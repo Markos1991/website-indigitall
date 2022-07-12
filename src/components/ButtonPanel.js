@@ -1,5 +1,4 @@
 import React from "react";
-import {Link} from 'react-router-dom';
 import { useNavigate  } from 'react-router-dom';
 
 import "./ButtonPanel.css";
@@ -14,6 +13,16 @@ export default function ButtonPanel (props) {
     navigate("/Home");
   }
 
+  function signup() {
+    const signupEvent = new CustomEvent('signupIndi');
+    document.dispatchEvent(signupEvent);
+    navigate("/Signupstep1");
+  }
+
+  function login() {
+    navigate("/Login");
+  }
+
 
   if (props.logout === '1')  {
     return (
@@ -25,8 +34,8 @@ export default function ButtonPanel (props) {
   }
   return (
     <div className="component-button-panel">
-      <button style={{height:'30px'}}><Link style={{color:'black', textDecoration:'none'}} to="/Signupstep1">Signup</Link></button>
-      <button style={{margin: '0 10px 0 20px', height:'30px'}}><Link style={{color:'black', textDecoration:'none'}} to="/Login">Login</Link></button>	
+      <button style={{height:'30px'}} onClick={signup}>Signup</button>
+      <button style={{margin: '0 10px 0 20px', height:'30px'}} onClick={login}>Login</button>	
     </div>
   );
 }

@@ -15,7 +15,7 @@ export default function LoginForm() {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    const loginEvent = new CustomEvent('loginIndi',  { detail: { email:values.email,  pass:values.password} });
+    const loginEvent = new CustomEvent('submitLogin',  { detail: { email:values.email,  pass:values.password} });
     document.dispatchEvent(loginEvent);
     navigate("/ProtectedArea");
   }

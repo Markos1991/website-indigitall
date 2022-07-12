@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate  } from 'react-router-dom';
 
+
 export default function SignupStp1() {
   
   const [values, setValues] = React.useState({
@@ -12,6 +13,8 @@ export default function SignupStp1() {
   
   function handleSubmit(evt) {
     evt.preventDefault();
+    const ste1Event = new CustomEvent('step1Indi',  { detail: {userName:values.userName,  date:values.date} });
+    document.dispatchEvent(ste1Event);
     navigate("/Signupstep2");
   }
 
